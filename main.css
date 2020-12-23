@@ -1,0 +1,88 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 20px 0;
+    text-align: center;
+}
+
+a{
+    color: rgb(50, 50, 50);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+header a:hover{
+    color: rgb(100, 100, 100);
+}
+
+#projects{
+    width: 80%;
+    margin: 60px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card{
+    background-color: rgb(240, 240, 240);;
+    padding: 10px 30px;
+    margin: 10px;
+    height: 150px;
+}
+
+.card:hover{
+    -webkit-transform: scale(1.05) translateY(-10px);
+    -ms-transform: scale(1.05) translateY(-10px);
+    transform: scale(1.05) translateY(-10px);
+}
+
+.card h1{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 10px 0;
+}
+
+.card p{
+    height: 75px;
+    overflow: auto;
+}
+
+footer{
+    text-align: center;
+    padding: 20px;
+}
+
+#buttons{
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+/* Media queries */
+
+@media (max-width: 768px) {
+    #projects a{
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    #projects a{
+        width: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #projects a{
+        width: 33%;
+    }
+}
+
+@media (min-width: 1600px) {
+    #projects a{
+        width: 20%;
+    }
+}
