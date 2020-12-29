@@ -1,41 +1,74 @@
-// Username
+// Initialize global variables
+
 let username = "luisdavidfer";
+let user = null;
+let repos = null;
+let page = 1;
 
-document.getElementById("username").innerHTML = username;
-document.getElementById("username").href = "https://github.com/" + username;
+// Event listener for More button
 
-document.getElementsByTagName("title")[0].innerText = username + " portfolio";  
+let moreButton = document.getElementById("more");
+moreButton.addEventListener("click", function(){
+        getRepositories();
+});
 
-let projects = null;
-request();
+// Start logic
 
-// Retrieve GitHub API data
+getUser();
 
-function request(page){
+// Retrieve GitHub user data from API
+
+function getUser(){
     
-    let url = "https://api.github.com/users/" + encodeURI(username) + "/repos?per_page=30";
-    url = page === undefined ? url : url += "&page=" + page;
+    let url = "https://api.github.com/users/" + encodeURI(username);
 
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function() {
-        if (xhr.status === 200)
-            if(JSON.parse(this.response).length > 0){
-                projects = JSON.parse(this.response);
-                load(projects);
-            }else
-                alert("No repositories found for user:\n" + username);
-        else 
+        if (xhr.status === 200){
+            user = JSON.parse(this.response);
+            document.getElementById("username").innerHTML = user.name;
+            document.getElementById("username").href = "https://github.com/" + user.login;
+            document.getElementsByTagName("title")[0].innerText = user.name + "'s portfolio";
+            getRepositories();
+        }else 
             alert("Invalid username:\n" + username);
     };
 
     xhr.send();
 }
 
-// Load retrived data
+// Retrieve GitHub repositories data from API
 
-function load(projects){
-    projects.forEach(project => {
+function getRepositories(){
+    if(user.public_repos > 0){
+
+        let url = "https://api.github.com/users/" + encodeURI(user.login) + "/repos?per_page=30&page=" + page;
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.onload = function() {
+            if (xhr.status === 200){
+                repos = JSON.parse(this.response);
+                printProjects(repos);
+                if(user.public_repos <= 30*page)
+                    document.getElementById("more").style.display = "none";
+                else{
+                    document.getElementById("more").style.display = "flex";
+                    page++;
+                }
+                    
+            }
+        }
+        xhr.send();
+    }else
+        alert("No repositories found for user:\n" + user.login);
+}
+
+// Print retrived repositories data
+
+function printProjects(repos){
+    repos.forEach(project => {
 
         project.description = project.description ? project.description : "";
 
@@ -54,7 +87,3 @@ function load(projects){
         document.getElementById("projects").innerHTML += projectHtml;
     });
 }
-
-let i=2;
-let el = document.getElementById("more");
-el.addEventListener("click", function(){request(i);i++});

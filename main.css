@@ -6,6 +6,7 @@ header{
     background-color: rgba(255, 255, 255, 0.75);
     padding: 20px 0;
     text-align: center;
+    z-index: 1;
 }
 
 a{
@@ -14,13 +15,13 @@ a{
     cursor: pointer;
 }
 
-header a:hover{
+header a:hover, footer a:hover{
     color: rgb(100, 100, 100);
 }
 
 #projects{
     width: 80%;
-    margin: 60px auto 0;
+    margin: 60px auto;
     display: flex;
     flex-wrap: wrap;
 }
@@ -52,13 +53,24 @@ header a:hover{
 
 footer{
     text-align: center;
-    padding: 20px;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.75);
+    z-index: 1;
 }
 
-#buttons{
-    display: flex;
+#more{
+    display: none;
     justify-content: center;
-    padding: 50px;
+    padding-bottom: 90px;
+}
+
+#more a:hover{
+    
+    text-decoration-line: underline;
 }
 
 /* Media queries */
